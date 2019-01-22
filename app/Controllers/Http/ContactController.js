@@ -59,7 +59,10 @@ class ContactController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({ request, response }) {
+    const contact = request.post();
+    return await Contact.create(contact);
+  }
 
   /**
    * Display a single contact.
@@ -70,7 +73,9 @@ class ContactController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) {
+    return await Contact.find(params.id);
+  }
 
   /**
    * Update contact details.
@@ -80,7 +85,12 @@ class ContactController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) {
+    const changes = request.post();
+    return await Contact.query()
+      .where("id", params.id)
+      .update(changes);
+  }
 
   /**
    * Delete a contact with id.
@@ -90,7 +100,11 @@ class ContactController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params, request, response }) {
+    const { id } = params;
+    const contact = await Contact.find(id);
+    return await contact.delete();
+  }
 }
 
 module.exports = ContactController;

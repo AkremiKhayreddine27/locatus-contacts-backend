@@ -42,7 +42,14 @@ class ActivityController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {}
+  async store({ request, response }) {
+    const { display, level, parentId } = request.post();
+    return await Activity.create({
+      display,
+      level,
+      parentId
+    });
+  }
 
   /**
    * Display a single activity.
@@ -53,7 +60,9 @@ class ActivityController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) {
+    return await Activity.find(params.id);
+  }
 
   /**
    * Update activity details.
@@ -63,7 +72,12 @@ class ActivityController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) {
+    const changes = request.post();
+    return await Activity.query()
+      .where("id", params.id)
+      .update(changes);
+  }
 
   /**
    * Delete a activity with id.
@@ -73,7 +87,11 @@ class ActivityController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params, request, response }) {
+    const { id } = params;
+    const activity = await Activity.find(id);
+    return await activity.delete();
+  }
 }
 
 module.exports = ActivityController;

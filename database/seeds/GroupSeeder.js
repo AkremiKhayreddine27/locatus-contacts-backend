@@ -30,7 +30,7 @@ const groups = [
 
 function generate() {
   const data = [];
-  for (let i = 1; i < 50; i++) {
+  for (let i = 1; i <= 50; i++) {
     data.push({
       group_id: faker.random.arrayElement(groups.map(group => group.id)),
       contact_id: i

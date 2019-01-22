@@ -116,7 +116,7 @@ const activities = [
 
 function generate() {
   const data = [];
-  for (let i = 1; i < 50; i++) {
+  for (let i = 1; i <= 50; i++) {
     data.push({
       activity_id: faker.random.arrayElement(
         activities

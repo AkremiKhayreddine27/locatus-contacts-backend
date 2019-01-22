@@ -4,6 +4,7 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+/** @type {import('../../Models/Group')} */
 const Group = use("App/Models/Group");
 
 /**
@@ -31,16 +32,6 @@ class GroupController {
   }
 
   /**
-   * Create/save a new group.
-   * POST groups
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store({ request, response }) {}
-
-  /**
    * Display a single group.
    * GET groups/:id
    *
@@ -49,7 +40,26 @@ class GroupController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) {
+    return await Group.find(params.id);
+  }
+
+  /**
+   * Create/save a new group.
+   * POST groups
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async store({ request, response }) {
+    const { display, level, parentId } = request.post();
+    return await Group.create({
+      display,
+      level,
+      parentId
+    });
+  }
 
   /**
    * Update group details.
@@ -59,7 +69,12 @@ class GroupController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) {
+    const changes = request.post();
+    return await Group.query()
+      .where("id", params.id)
+      .update(changes);
+  }
 
   /**
    * Delete a group with id.
@@ -69,7 +84,11 @@ class GroupController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy({ params, request, response }) {}
+  async destroy({ params, request, response }) {
+    const { id } = params;
+    const group = await Group.find(id);
+    return await group.delete();
+  }
 }
 
 module.exports = GroupController;
