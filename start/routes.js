@@ -24,16 +24,21 @@ Route.post("auth", "UserController.login").middleware("guest");
 /**
  * Contacts
  */
-Route.get("contacts", "ContactController.index");
+Route.get("contacts", "ContactController.index").middleware("auth");
 
 /**
  * Groups
  */
-Route.get("groups", "GroupController.index");
-Route.post("groups/:id/contacts", "GroupController.addContacts");
+Route.get("groups", "GroupController.index").middleware("auth");
+Route.post("groups/:id/contacts", "GroupController.addContacts").middleware(
+  "auth"
+);
 
 /**
  * Activities
  */
-Route.get("activities", "ActivityController.index");
-Route.post("activities/:id/contacts", "ActivityController.addContacts");
+Route.get("activities", "ActivityController.index").middleware("auth");
+Route.post(
+  "activities/:id/contacts",
+  "ActivityController.addContacts"
+).middleware("auth");
