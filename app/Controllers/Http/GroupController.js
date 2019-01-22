@@ -23,6 +23,13 @@ class GroupController {
     return await Group.all();
   }
 
+  async addContacts({ params, request, response, view }) {
+    const groupId = params.id;
+    const contactsids = request.post();
+    const group = await Group.find(groupId);
+    return await group.contacts().attach(Object.values(contactsids));
+  }
+
   /**
    * Render a form to be used for creating a new group.
    * GET groups/create

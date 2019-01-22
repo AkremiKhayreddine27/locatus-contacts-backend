@@ -30,6 +30,7 @@ Route.get("contacts", "ContactController.index").middleware("auth");
  * Groups
  */
 Route.get("groups", "GroupController.index").middleware("auth");
+Route.post("groups/:id/contacts", "GroupController.addContacts");
 
 /**
  * Activities
