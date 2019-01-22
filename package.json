@@ -1,18 +1,18 @@
 {
-  "name": "adonis-fullstack-app",
+  "name": "locatus-contacts-api",
   "version": "4.1.0",
   "adonis-version": "4.1.0",
-  "description": "The fullstack application boilerplate for Adonisjs",
+  "description": "Locatus contacts Api",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
     "test": "node ace test"
   },
   "keywords": [
-    "adonisjs",
-    "adonis-app"
+    "Locatus",
+    "contacts"
   ],
-  "author": "",
+  "author": "Akremi Khayreddine",
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
