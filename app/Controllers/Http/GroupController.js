@@ -25,9 +25,9 @@ class GroupController {
 
   async addContacts({ params, request, response, view }) {
     const groupId = params.id;
-    const contactsids = request.post();
+    const { contactsIds } = request.post();
     const group = await Group.find(groupId);
-    return await group.contacts().attach(Object.values(contactsids));
+    return await group.contacts().attach(contactsIds);
   }
 
   /**
