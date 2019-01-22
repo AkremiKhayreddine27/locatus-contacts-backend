@@ -25,29 +25,20 @@ class ContactController {
     let query = Contact.query()
       .with("groups")
       .with("activities");
-    if (req.groups) {
-      query = query.whereHas(
-        "groups",
-        builder => {
-          builder.whereIn("groups.id", req.groups.map(g => Number.parseInt(g)));
-        },
-        ">",
-        0
-      );
-    }
-    if (req.activities) {
-      query = query.whereHas(
-        "activities",
-        builder => {
-          builder.whereIn(
-            "activities.id",
-            req.activities.map(a => Number.parseInt(a))
-          );
-        },
-        ">",
-        0
-      );
-    }
+    Object.keys(req).map(key => {
+      if (Array.isArray(req[key])) {
+        query = query.whereHas(
+          key,
+          builder => {
+            builder.whereIn(key + ".id", req[key].map(g => Number.parseInt(g)));
+          },
+          ">",
+          0
+        );
+      } else {
+        query = query.where(key, req[key]);
+      }
+    });
     return await query.fetch();
   }
 
