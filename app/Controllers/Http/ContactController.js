@@ -21,7 +21,34 @@ class ContactController {
    * @param {View} ctx.view
    */
   async index({ request, response, view }) {
-    return await Contact.query().with("groups").with("activities").fetch();
+    const req = request.get();
+    let query = Contact.query()
+      .with("groups")
+      .with("activities");
+    if (req.groups) {
+      query = query.whereHas(
+        "groups",
+        builder => {
+          builder.whereIn("groups.id", req.groups.map(g => Number.parseInt(g)));
+        },
+        ">",
+        0
+      );
+    }
+    if (req.activities) {
+      query = query.whereHas(
+        "activities",
+        builder => {
+          builder.whereIn(
+            "activities.id",
+            req.activities.map(a => Number.parseInt(a))
+          );
+        },
+        ">",
+        0
+      );
+    }
+    return await query.fetch();
   }
 
   /**

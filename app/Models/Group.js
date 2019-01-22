@@ -4,16 +4,8 @@
 const Model = use("Model");
 
 class Group extends Model {
-  static get table() {
-    return "Group";
-  }
-
   contacts() {
-    return this.belongsToMany(
-      "App/Models/Contact",
-      "groupId",
-      "contactId"
-    ).pivotTable("ContactGroup");
+    return this.belongsToMany("App/Models/Contact");
   }
 }
 

@@ -3,7 +3,9 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+/** @typedef {import('../../Models/ContactActivity')}  ContactActivity*/
 
+/** @type {import('../../Models/Activity')} */
 const Activity = use("App/Models/Activity");
 
 /**
@@ -20,19 +22,17 @@ class ActivityController {
    * @param {View} ctx.view
    */
   async index({ request, response, view }) {
-    return await Activity.query().with('children').fetch();
+    return await Activity.query()
+      .with("children")
+      .fetch();
   }
 
-  /**
-   * Render a form to be used for creating a new activity.
-   * GET activities/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create({ request, response, view }) {}
+  async addContacts({ params, request, response, view }) {
+    const activityID = params.id;
+    const { contactsIDS } = request.post();
+    const activity = await Activity.find(activityID);
+    return await activity.contacts().attach(contactsIDS);
+  }
 
   /**
    * Create/save a new activity.
@@ -54,17 +54,6 @@ class ActivityController {
    * @param {View} ctx.view
    */
   async show({ params, request, response, view }) {}
-
-  /**
-   * Render a form to update an existing activity.
-   * GET activities/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit({ params, request, response, view }) {}
 
   /**
    * Update activity details.

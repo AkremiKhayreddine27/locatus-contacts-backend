@@ -4,10 +4,6 @@
 const Model = use("Model");
 
 class Activity extends Model {
-  static get table() {
-    return "Activity";
-  }
-
   children() {
     return this.hasMany("App/Models/Activity", "id", "parentId");
   }

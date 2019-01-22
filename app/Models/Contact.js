@@ -4,24 +4,22 @@
 const Model = use("Model");
 
 class Contact extends Model {
-  static get table() {
-    return "Contact";
+  static get createdAtColumn() {
+    return "createdAt";
+  }
+
+  static get updatedAtColumn() {
+    return "lastModified";
   }
 
   groups() {
-    return this.belongsToMany(
-      "App/Models/Group",
-      "contactId",
-      "groupId"
-    ).pivotTable("ContactGroup");
+    return this.belongsToMany("App/Models/Group");
   }
 
   activities() {
-    return this.belongsToMany(
-      "App/Models/Activity",
-      "contactId",
-      "activityId"
-    ).pivotTable("ContactActivity");
+    return this.belongsToMany("App/Models/Activity").pivotTable(
+      "contact_activity"
+    );
   }
 }
 

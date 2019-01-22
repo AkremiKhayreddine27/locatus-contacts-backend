@@ -28,7 +28,9 @@
     "@adonisjs/shield": "^1.0.8",
     "pg": "^7.8.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "faker": "^4.1.0"
+  },
   "autoload": {
     "App": "./app"
   }
