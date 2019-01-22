@@ -9,17 +9,12 @@
 | make use of Lucid models directly.
 |
 */
-
-/** @type {import('@adonisjs/lucid/src/Database/Manager')} */
-const Database = use("Database");
 const Group = use("App/Models/Group");
 const ContactGroup = use("App/Models/ContactGroup");
 const faker = require("faker");
 
 class GroupSeeder {
   static async run() {
-    //await Database.truncate("groups");
-    //await Database.truncate("contact_group");
     await Group.createMany(groups);
     await ContactGroup.createMany(generate());
   }

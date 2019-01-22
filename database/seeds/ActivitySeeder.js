@@ -10,16 +10,12 @@
 |
 */
 
-/** @type {import('@adonisjs/lucid/src/Database/Manager')} */
-const Database = use("Database");
 const Activity = use("App/Models/Activity");
 const ContactActivity = use("App/Models/ContactActivity");
 const faker = require("faker");
 
 class ActivitySeeder {
   static async run() {
-    //await Database.truncate("activities");
-    //await Database.truncate("contact_activity");
     await Activity.createMany(activities);
     await ContactActivity.createMany(generate());
   }

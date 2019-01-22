@@ -10,8 +10,6 @@
 |
 */
 
-/** @type {import('@adonisjs/lucid/src/Database/Manager')} */
-const Database = use("Database");
 /** @type {import('../../app/Models/Contact')} */
 const Contact = use("App/Models/Contact");
 /** @type {import('faker') */
@@ -19,7 +17,6 @@ const faker = require("faker");
 
 class ContactSeeder {
   static async run() {
-    //await Database.truncate("contacts");
     await Contact.createMany(generate(50));
   }
 }
