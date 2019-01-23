@@ -27,11 +27,16 @@ class ActivityController {
       .fetch();
   }
 
+  /**
+   * Sync activity contacts
+   * Detach all contacts
+   * Attach new contacts
+   */
   async addContacts({ params, request, response, view }) {
     const activityID = params.id;
     const { contactsIDS } = request.post();
     const activity = await Activity.find(activityID);
-    return await activity.contacts().attach(contactsIDS);
+    return await activity.contacts().sync(contactsIDS);
   }
 
   /**

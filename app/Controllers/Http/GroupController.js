@@ -24,11 +24,16 @@ class GroupController {
     return await Group.all();
   }
 
+  /**
+   * Sync group contacts
+   * Detach all contacts
+   * Attach new contacts
+   */
   async addContacts({ params, request, response, view }) {
     const groupId = params.id;
     const { contactsIds } = request.post();
     const group = await Group.find(groupId);
-    return await group.contacts().attach(contactsIds);
+    return await group.contacts().sync(contactsIds);
   }
 
   /**
