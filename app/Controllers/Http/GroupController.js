@@ -44,7 +44,9 @@ class GroupController {
       if (relation) {
         return await group.contacts().detach(contactsIds);
       } else if (contactGroup) {
-        return await contactGroup.update({ group_id: groupId });
+        return await ContactGroup.query()
+          .where({ contact_id: contactsIds[0] })
+          .update({ group_id: groupId });
       } else {
         return await group.contacts().attach(contactsIds);
       }
