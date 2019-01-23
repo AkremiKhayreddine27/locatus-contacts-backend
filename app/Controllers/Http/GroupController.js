@@ -35,10 +35,10 @@ class GroupController {
     const { contactsIds } = request.post();
     const group = await Group.find(groupId);
     if (contactsIds.length === 1) {
-      const relation = ContactGroup.query()
+      const relation = await ContactGroup.query()
         .where({ contact_id: contactsIds[0], group_id: groupId })
         .first();
-      const contactGroup = ContactGroup.query()
+      const contactGroup = await ContactGroup.query()
         .where({ contact_id: contactsIds[0] })
         .first();
       if (relation) {

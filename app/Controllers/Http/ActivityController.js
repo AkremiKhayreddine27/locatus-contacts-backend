@@ -36,7 +36,7 @@ class ActivityController {
     const { contactsIds } = request.post();
     const activity = await Activity.find(activityID);
     if (contactsIds.length === 1) {
-      const relation = ContactActivity.query()
+      const relation = await ContactActivity.query()
         .where({ activity_id: activityID, contact_id: contactsIds[0] })
         .first();
       if (relation) {
