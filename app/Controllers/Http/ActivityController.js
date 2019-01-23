@@ -34,9 +34,9 @@ class ActivityController {
    */
   async addContacts({ params, request, response, view }) {
     const activityID = params.id;
-    const { contactsIDS } = request.post();
+    const { contactsIds } = request.post();
     const activity = await Activity.find(activityID);
-    return await activity.contacts().sync(contactsIDS);
+    return await activity.contacts().sync(contactsIds);
   }
 
   /**
