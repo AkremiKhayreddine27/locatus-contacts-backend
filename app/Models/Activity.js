@@ -7,6 +7,10 @@ class Activity extends Model {
   children() {
     return this.hasMany("App/Models/Activity", "id", "parentId");
   }
+
+  contacts() {
+    return this.belongsToMany("App/Models/Contact");
+  }
 }
 
 module.exports = Activity;
