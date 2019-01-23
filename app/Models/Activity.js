@@ -9,7 +9,7 @@ class Activity extends Model {
   }
 
   contacts() {
-    return this.belongsToMany("App/Models/Contact");
+    return this.belongsToMany("App/Models/Contact").pivotTable('contact_activity');
   }
 }
 
