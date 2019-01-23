@@ -78,7 +78,7 @@ class ContactController {
    */
   async update({ params, request, response }) {
     const changes = request.post();
-    const contact = Contact.find(params.id);
+    let contact = Contact.find(params.id);
     contact = { ...contact, ...changes };
     return await contact.save();
   }
