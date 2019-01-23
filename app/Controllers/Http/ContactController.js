@@ -78,9 +78,24 @@ class ContactController {
    */
   async update({ params, request, response }) {
     const changes = request.post();
-    let contact = Contact.find(params.id);
-    contact = { ...contact, ...changes };
-    return await contact.save();
+    if (changes.emails) {
+      changes.emails = JSON.stringify(changes.emails);
+    }
+    if (changes.roles) {
+      changes.roles = JSON.stringify(changes.roles);
+    }
+    if (changes.rate) {
+      changes.rate = JSON.stringify(changes.rate);
+    }
+    if (changes.phoneNumbers) {
+      changes.phoneNumbers = JSON.stringify(changes.phoneNumbers);
+    }
+    if (changes.addresses) {
+      changes.addresses = JSON.stringify(changes.addresses);
+    }
+    return await Contact.query()
+      .where("id", params.id)
+      .update(changes);
   }
 
   /**
