@@ -6,6 +6,7 @@
 
 /** @type {import('../../Models/Group')} */
 const Group = use("App/Models/Group");
+const ContactGroup = use("App/Models/ContactGroup");
 
 /**
  * Resourceful controller for interacting with groups
