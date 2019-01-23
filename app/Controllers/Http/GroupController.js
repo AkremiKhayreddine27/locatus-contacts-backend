@@ -40,7 +40,7 @@ class GroupController {
         .first();
       const contactGroup = ContactGroup.query()
         .where({ contact_id: contactsIds[0] })
-        .firts();
+        .first();
       if (relation) {
         return await group.contacts().detach(contactsIds);
       } else if (contactGroup) {
