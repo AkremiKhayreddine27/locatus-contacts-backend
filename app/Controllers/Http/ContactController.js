@@ -111,6 +111,19 @@ class ContactController {
     const contact = await Contact.find(id);
     return await contact.delete();
   }
+
+  /**
+   * Delete many contacts.
+   * DELETE contacts/delete
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async destroyMany({ params, request, response }) {
+    const { ids } = request.post();
+    return await Contact.query().whereIn('id', ids).delete();
+  }
 }
 
 module.exports = ContactController;

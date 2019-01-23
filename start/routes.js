@@ -30,6 +30,9 @@ Route.get("contacts/:id", "ContactController.show").middleware("auth");
 Route.post("contacts", "ContactController.store").middleware("auth");
 Route.put("contacts/:id", "ContactController.update").middleware("auth");
 Route.delete("contacts/:id", "ContactController.destroy").middleware("auth");
+Route.post("contacts/delete", "ContactController.destroyMany").middleware(
+  "auth"
+);
 
 /**
  * Groups

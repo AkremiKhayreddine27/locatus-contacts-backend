@@ -11,12 +11,12 @@ class ContactGroupSchema extends Schema {
         .integer("group_id")
         .references("id")
         .inTable("groups")
-        .nullable();
+        .onDelete("cascade");
       table
         .integer("contact_id")
         .references("id")
         .inTable("contacts")
-        .nullable();
+        .onDelete("cascade");
       table.timestamps();
     });
   }
