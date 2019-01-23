@@ -3,10 +3,9 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
-/** @typedef {import('../../Models/ContactActivity')}  ContactActivity*/
 
-/** @type {import('../../Models/Activity')} */
 const Activity = use("App/Models/Activity");
+const ContactActivity = use("App/Models/ContactActivity");
 
 /**
  * Resourceful controller for interacting with activities
@@ -36,7 +35,16 @@ class ActivityController {
     const activityID = params.id;
     const { contactsIds } = request.post();
     const activity = await Activity.find(activityID);
-    return await activity.contacts().attach(contactsIds);
+    if (contactsIds.length === 1) {
+      const relation = ContactActivity.query()
+        .where({ activity_id: activityID, contact_id: contactsIds[0] })
+        .first();
+      if (relation) {
+        return await activity.contacts().detach(contactsIds);
+      } else {
+        return await activity.contacts().attach(contactsIds);
+      }
+    }
   }
 
   /**

@@ -33,7 +33,21 @@ class GroupController {
     const groupId = params.id;
     const { contactsIds } = request.post();
     const group = await Group.find(groupId);
-    return await group.contacts().sync(contactsIds);
+    if (contactsIds.length === 1) {
+      const relation = ContactGroup.query()
+        .where({ contact_id: contactsIds[0], group_id: groupId })
+        .first();
+      const contactGroup = ContactGroup.query()
+        .where({ contact_id: contactsIds[0] })
+        .firts();
+      if (relation) {
+        return await group.contacts().detach(contactsIds);
+      } else if (contactGroup) {
+        return await contactGroup.update({ group_id: groupId });
+      } else {
+        return await group.contacts().attach(contactsIds);
+      }
+    }
   }
 
   /**
