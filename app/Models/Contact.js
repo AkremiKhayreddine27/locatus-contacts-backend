@@ -12,6 +12,7 @@ class Contact extends Model {
      * it to the database.
      */
     this.addHook("beforeSave", async contactInstance => {
+      console.log(contactInstance);
       if (contactInstance.dirty.emails) {
         contactInstance.emails = JSON.stringify(contactInstance.emails);
       }
