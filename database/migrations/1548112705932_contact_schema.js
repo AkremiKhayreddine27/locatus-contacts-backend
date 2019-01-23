@@ -14,6 +14,8 @@ class ContactSchema extends Schema {
         .inTable("contacts")
         .nullable();
       table.integer("externalId");
+      table.string("description").nullable();
+      table.json("roles").nullable();
       table.boolean("followed");
       table.string("job");
       table.string("photo");
