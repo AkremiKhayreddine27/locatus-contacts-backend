@@ -12,22 +12,21 @@ class Contact extends Model {
      * it to the database.
      */
     this.addHook("beforeSave", async contactInstance => {
-      console.log(contactInstance);
-      if (contactInstance.dirty.emails) {
+      if (contactInstance.emails) {
         contactInstance.emails = JSON.stringify(contactInstance.emails);
       }
-      if (contactInstance.dirty.roles) {
+      if (contactInstance.roles) {
         contactInstance.roles = JSON.stringify(contactInstance.roles);
       }
-      if (contactInstance.dirty.rate) {
+      if (contactInstance.rate) {
         contactInstance.rate = JSON.stringify(contactInstance.rate);
       }
-      if (contactInstance.dirty.phoneNumbers) {
+      if (contactInstance.phoneNumbers) {
         contactInstance.phoneNumbers = JSON.stringify(
           contactInstance.phoneNumbers
         );
       }
-      if (contactInstance.dirty.addresses) {
+      if (contactInstance.addresses) {
         contactInstance.addresses = JSON.stringify(contactInstance.addresses);
       }
     });
