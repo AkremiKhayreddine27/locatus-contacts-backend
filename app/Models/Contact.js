@@ -11,25 +11,65 @@ class Contact extends Model {
      * A hook to parse json arrays before saving
      * it to the database.
      */
-    this.addHook("beforeSave", async contactInstance => {
-      if (contactInstance.emails) {
-        contactInstance.emails = JSON.stringify(contactInstance.emails);
-      }
-      if (contactInstance.roles) {
-        contactInstance.roles = JSON.stringify(contactInstance.roles);
-      }
-      if (contactInstance.rate) {
-        contactInstance.rate = JSON.stringify(contactInstance.rate);
-      }
-      if (contactInstance.phoneNumbers) {
-        contactInstance.phoneNumbers = JSON.stringify(
-          contactInstance.phoneNumbers
-        );
-      }
-      if (contactInstance.addresses) {
-        contactInstance.addresses = JSON.stringify(contactInstance.addresses);
-      }
+    this.addHook("beforeSave", async contact => {
+      this.stringifyJsonData(contact);
     });
+
+    /**
+     * A hook to parse json arrays before saving
+     * it to the database.
+     */
+    this.addHook("afterFetch", async contacts => {
+      contacts.map(contact => {
+        this.parseJsonData(contact);
+        this.convertDates(contact);
+      });
+    });
+  }
+
+  convertDates(contact) {
+    if (contact.createdAt) {
+      contact.createdAt = new Date(contact.createdAt);
+    }
+    if (contact.lastModified) {
+      contact.lastModified = new Date(contact.lastModified);
+    }
+  }
+
+  parseJsonData(contact) {
+    if (contact.emails) {
+      contact.emails = JSON.parse(contact.emails);
+    }
+    if (contact.addresses) {
+      contact.addresses = JSON.parse(contact.addresses);
+    }
+    if (contact.rate) {
+      contact.rate = JSON.parse(contact.rate);
+    }
+    if (contact.phoneNumbers) {
+      contact.phoneNumbers = JSON.parse(contact.phoneNumbers);
+    }
+    if (contact.roles) {
+      contact.roles = JSON.parse(contact.roles);
+    }
+  }
+
+  stringifyJsonData(contact) {
+    if (contact.emails) {
+      contact.emails = JSON.stringify(contact.emails);
+    }
+    if (contact.roles) {
+      contact.roles = JSON.stringify(contact.roles);
+    }
+    if (contact.rate) {
+      contact.rate = JSON.stringify(contact.rate);
+    }
+    if (contact.phoneNumbers) {
+      contact.phoneNumbers = JSON.stringify(contact.phoneNumbers);
+    }
+    if (contact.addresses) {
+      contact.addresses = JSON.stringify(contact.addresses);
+    }
   }
 
   static get createdAtColumn() {
