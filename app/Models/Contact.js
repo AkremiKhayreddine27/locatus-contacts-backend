@@ -20,17 +20,10 @@ class Contact extends Model {
      * it to the database.
      */
     this.addHook("afterFetch", async contacts => {
+      console.log(contacts);
       contacts.map(contact => {
         parseJsonData(contact);
       });
-    });
-
-    /**
-     * A hook to parse json arrays before saving
-     * it to the database.
-     */
-    this.addHook("afterCreate", async contact => {
-      parseJsonData(contact);
     });
   }
 
@@ -63,20 +56,24 @@ function convertDates(contact) {
 }
 
 function parseJsonData(contact) {
-  if (contact.emails) {
-    contact.emails = JSON.parse(contact.emails);
-  }
-  if (contact.addresses) {
-    contact.addresses = JSON.parse(contact.addresses);
-  }
-  if (contact.rate) {
-    contact.rate = JSON.parse(contact.rate);
-  }
-  if (contact.phoneNumbers) {
-    contact.phoneNumbers = JSON.parse(contact.phoneNumbers);
-  }
-  if (contact.roles) {
-    contact.roles = JSON.parse(contact.roles);
+  try {
+    if (contact.emails) {
+      contact.emails = JSON.parse(contact.emails);
+    }
+    if (contact.addresses) {
+      contact.addresses = JSON.parse(contact.addresses);
+    }
+    if (contact.rate) {
+      contact.rate = JSON.parse(contact.rate);
+    }
+    if (contact.phoneNumbers) {
+      contact.phoneNumbers = JSON.parse(contact.phoneNumbers);
+    }
+    if (contact.roles) {
+      contact.roles = JSON.parse(contact.roles);
+    }
+  } catch (e) {
+    console.log(e);
   }
 }
 

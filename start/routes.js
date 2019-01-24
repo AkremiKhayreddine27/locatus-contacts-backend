@@ -25,7 +25,7 @@ Route.post("register", "UserController.register").middleware("guest");
 /**
  * Contacts
  */
-Route.get("contacts", "ContactController.index").middleware("auth");
+Route.get("contacts", "ContactController.index");
 Route.get("contacts/:id", "ContactController.show").middleware("auth");
 Route.post("contacts", "ContactController.store").middleware("auth");
 Route.put("contacts/:id", "ContactController.update").middleware("auth");
