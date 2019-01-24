@@ -11,12 +11,12 @@ class ContactActivitySchema extends Schema {
         .integer("activity_id")
         .references("id")
         .inTable("activities")
-        .nullable();
+        .onDelete("cascade");
       table
         .integer("contact_id")
         .references("id")
         .inTable("contacts")
-        .nullable();
+        .onDelete("cascade");
       table.timestamps();
     });
   }
