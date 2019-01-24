@@ -22,8 +22,15 @@ class Contact extends Model {
     this.addHook("afterFetch", async contacts => {
       contacts.map(contact => {
         parseJsonData(contact);
-        convertDates(contact);
       });
+    });
+
+    /**
+     * A hook to parse json arrays before saving
+     * it to the database.
+     */
+    this.addHook("afterCreate", async contact => {
+      parseJsonData(contact);
     });
   }
 
