@@ -6,6 +6,8 @@
 
 /** @typedef {import('../../Models/Contact')} */
 const Contact = use("App/Models/Contact");
+/** @type {import('@adonisjs/lucid/src/Database/Manager')} */
+const Database = use("Database");
 
 /**
  * Resourceful controller for interacting with contacts
@@ -25,7 +27,8 @@ class ContactController {
     let query = Contact.query()
       .with("groups")
       .with("activities");
-    Object.keys(req).map(key => {
+    let isRaw = false;
+    Object.keys(req).map((key, index) => {
       if (Array.isArray(req[key])) {
         query = query.whereHas(
           key,
@@ -35,6 +38,13 @@ class ContactController {
           ">",
           0
         );
+      } else if (key.includes(".")) {
+        console.log(index);
+        if (index > 0) {
+          const clone = key.split(".");
+          const raw = "LOWER(" + clone[0] + " ->> '" + clone[1] + "') LIKE LOWER(?)";
+          query = query.whereRaw(raw, ["%" + req[key] + "%"]);
+        }
       } else {
         query = query.where(key, req[key]);
       }
@@ -122,7 +132,9 @@ class ContactController {
    */
   async destroyMany({ params, request, response }) {
     const { ids } = request.post();
-    return await Contact.query().whereIn('id', ids).delete();
+    return await Contact.query()
+      .whereIn("id", ids)
+      .delete();
   }
 }
 

@@ -20,7 +20,6 @@ class Contact extends Model {
      * it to the database.
      */
     this.addHook("afterFetch", async contacts => {
-      console.log(contacts);
       contacts.map(contact => {
         parseJsonData(contact);
       });
@@ -73,7 +72,7 @@ function parseJsonData(contact) {
       contact.roles = JSON.parse(contact.roles);
     }
   } catch (e) {
-    console.log(e);
+    //console.log(e);
   }
 }
 

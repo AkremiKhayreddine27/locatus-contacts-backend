@@ -31,10 +31,19 @@ const groups = [
 function generate() {
   const data = [];
   for (let i = 1; i <= 50; i++) {
-    data.push({
-      group_id: faker.random.arrayElement(groups.map(group => group.id)),
-      contact_id: i
-    });
+    if (i <= 20) {
+      data.push({
+        group_id: 2,
+        contact_id: i
+      });
+    } else {
+      data.push({
+        group_id: faker.random.arrayElement(
+          groups.filter(group => group.id !== 2).map(group => group.id)
+        ),
+        contact_id: i
+      });
+    }
   }
   return data;
 }

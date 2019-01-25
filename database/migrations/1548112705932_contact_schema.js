@@ -12,6 +12,7 @@ class ContactSchema extends Schema {
         .integer("company_id")
         .references("id")
         .inTable("contacts")
+        .onDelete('SET NULL')
         .nullable();
       table.integer("externalId");
       table.string("description").nullable();
