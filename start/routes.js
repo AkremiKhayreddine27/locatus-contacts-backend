@@ -58,3 +58,11 @@ Route.post(
   "activities/:id/contacts",
   "ActivityController.addContacts"
 ).middleware("auth");
+
+/**
+ * Relations
+ */
+Route.get("contacts-groups", "ContactGroupController.index").middleware("auth");
+Route.get("contacts-activities", "ContactActivityController.index").middleware(
+  "auth"
+);
