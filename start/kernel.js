@@ -1,7 +1,9 @@
-'use strict'
+"use strict";
 
 /** @type {import('@adonisjs/framework/src/Server')} */
-const Server = use('Server')
+const Server = use("Server");
+
+const Eureka = require("eureka-js-client").Eureka;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,12 +15,12 @@ const Server = use('Server')
 |
 */
 const globalMiddleware = [
-  'Adonis/Middleware/BodyParser',
-  'Adonis/Middleware/Session',
-  'Adonis/Middleware/Shield',
-  'Adonis/Middleware/AuthInit',
-  'App/Middleware/ConvertEmptyStringsToNull',
-]
+  "Adonis/Middleware/BodyParser",
+  "Adonis/Middleware/Session",
+  "Adonis/Middleware/Shield",
+  "Adonis/Middleware/AuthInit",
+  "App/Middleware/ConvertEmptyStringsToNull"
+];
 
 /*
 |--------------------------------------------------------------------------
@@ -38,9 +40,9 @@ const globalMiddleware = [
 |
 */
 const namedMiddleware = {
-  auth: 'Adonis/Middleware/Auth',
-  guest: 'Adonis/Middleware/AllowGuestOnly'
-}
+  auth: "Adonis/Middleware/Auth",
+  guest: "Adonis/Middleware/AllowGuestOnly"
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -52,12 +54,41 @@ const namedMiddleware = {
 | control over request lifecycle.
 |
 */
-const serverMiddleware = [
-  'Adonis/Middleware/Static',
-  'Adonis/Middleware/Cors'
-]
+const serverMiddleware = ["Adonis/Middleware/Static", "Adonis/Middleware/Cors"];
+/*
+const client = new Eureka({
+  instance: {
+    app: "contacts",
+    hostName: "localhost",
+    ipAddr: "127.0.0.1",
+    port: {
+      $: 3333,
+      "@enabled": 'true'
+    },
+    vipAddress: "contacts",
+    dataCenterInfo: {
+      "@class": "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
+      name: "MyOwn"
+    },
+    statusPageUrl: "http://localhost:3333"
+  },
+  eureka: {
+    host: "192.168.1.150",
+    port: 8082,
+    servicePath: "/eureka/apps/",
+    registerWithEureka: true,
+    fetchRegistry: true
+  }
+});
 
-Server
-  .registerGlobal(globalMiddleware)
+client.logger.level("debug");
+client.start(error => {
+  console.log(error || "complete");
+});
+*/
+
+Server.registerGlobal(globalMiddleware)
   .registerNamed(namedMiddleware)
-  .use(serverMiddleware)
+  .use(serverMiddleware);
+
+
